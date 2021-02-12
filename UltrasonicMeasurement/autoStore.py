@@ -59,5 +59,5 @@ if __name__ == '__main__':
         sleep(0.1) # delay to view the distance
 
     print( distanceVal )
-    insertData( 'rpi3_ERD.md', distanceVal )
+    insertData( 'rpi3_powerBank.md', distanceVal )
 

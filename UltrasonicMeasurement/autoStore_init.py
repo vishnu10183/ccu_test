@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
         final_time = time()
 
-        with open( 'rpi3_ERD.md' , 'a' ) as fw:
+        with open( 'rpi3_powerBank.md' , 'a' ) as fw:
             fw.write( str( round(((final_time - init_time)*170*100),3)) +'\n' )
 
         # multiplied by 100 for metre to cm
