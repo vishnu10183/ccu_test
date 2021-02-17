@@ -25,7 +25,7 @@ int main(void) {
 	pid = getpid();
 	ret = setpriority(which, pid, priority);
   if ( !ret )
-    fprintf( stdout, "Successfully SetPriority : %d\n", priority );
+    fprintf( stdout, "Successfully SetPriority : %d\n", getpriority(which, pid) );
   else
     fprintf( stdout, "[Error] Set Priority Error.");
   
