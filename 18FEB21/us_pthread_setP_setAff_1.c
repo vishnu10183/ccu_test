@@ -62,7 +62,7 @@ void *ultraS( void *param ){
 		unsigned long int duration;
 		float cm;
 
-		if ( count <= 20 ) {
+		if ( count < 20 ) {
 		  pinMode(pingPin, OUTPUT);
 		  digitalWrite(pingPin, LOW);
 		  delayMicroseconds(2);
