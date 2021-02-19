@@ -2,3 +2,6 @@ DHT22 (Python/C)
 https://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/
 
 
+Linux Device Driver - RPi Tutorial
+https://embetronicx.com/tutorials/microcontrollers/raspberry-pi/gpio-driver-basic-using-raspberry-pi/
+
