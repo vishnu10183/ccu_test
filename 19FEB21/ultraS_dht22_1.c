@@ -43,7 +43,7 @@ cpu_set_t  mask;
 
 int data[5] = { 0, 0, 0, 0, 0 };
 float tempC = 0.0 ;
-
+float dist_cm[30] ;
 
 
 // DHT22 function
@@ -189,6 +189,8 @@ void *ultraS( void *param ){
 		  ultraSpeed = 331.3 + (0.606 * tempC);
 		  cm = (duration / 20000.0) * ultraSpeed;
 
+			
+			dist_cm[count] = cm;
 		  //Serial.print(" | ");
 		  //Serial.print(cm);
 		  //Serial.println();
@@ -200,7 +202,7 @@ void *ultraS( void *param ){
 		}
 		else{
 		  fprintf( stdout, "Program Completed !");
-		  return 0;
+		  return dist_cm;
 		}
 		delay(100);
 	}
@@ -209,7 +211,7 @@ void *ultraS( void *param ){
 
 
 
-int main()
+int main(  )
 {
 	int dummy =0;
 	/* this variable is our reference to the thread */
@@ -229,5 +231,7 @@ int main()
 
 	}
 	
-	fprintf( stdout, "Program Completed!" );
+	//fprintf( stdout, "Program Completed!" );
+	printf( "Program Completed!" );
+	return 0;
 }
