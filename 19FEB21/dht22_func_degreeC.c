@@ -5,7 +5,7 @@
 
 #define MAX_TIMINGS	85
 #define DHT_PIN		2
-#define obs_no		10
+#define obs_no		5
 
 int data[5] = { 0, 0, 0, 0, 0 };
 
@@ -76,7 +76,7 @@ float read_dht_temp( char ch_t )
 		f = c * 1.8f + 32;
 		//fprintf( stdout, "Temperature = %.1f *C (%.1f *F)\n",  c, f );
 	}else  {
-		fprintf( stdout,"Data not good, skip\n" );
+		fprintf( stdout,"\nData not good, skip" );
 		delay( 2000 );
 		return( read_dht_temp( ch_t ) ); // re-read the temp
 	}
@@ -100,8 +100,9 @@ int main( void )
 
 	while ( tests < obs_no )
 	{
-		fprintf( stdout, "\n %.2f 'C", read_dht_temp( 'c' ) );
+		
 		delay( 2000 ); /* wait 2 seconds before next read for DHT22 */
+		fprintf( stdout, "\n %.2f 'C", read_dht_temp( 'c' ) );
 		tests++;
 	}
 
