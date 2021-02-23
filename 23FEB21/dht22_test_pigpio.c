@@ -3,46 +3,50 @@
  *	read temperature and humidity from DHT11 or DHT22 sensor
  */
 
-#include <wiringPi.h>
+//#include <wiringPi.h>
+#include <pigpio.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 
 #define MAX_TIMINGS	85
-#define DHT_PIN		2
+#define DHT_PIN		27 
+// 2
 
 int data[5] = { 0, 0, 0, 0, 0 };
 
 void read_dht_data()
 {
-	uint8_t laststate	= HIGH;
+	uint8_t laststate	= 1;
 	uint8_t counter		= 0;
 	uint8_t j			= 0, i;
 
 	data[0] = data[1] = data[2] = data[3] = data[4] = 0;
 
 	/* pull pin down for 18 milliseconds */
-	pinMode( DHT_PIN, OUTPUT );
-	digitalWrite( DHT_PIN, LOW );
-	delay( 18 );
+	gpioSetMode( DHT_PIN, PI_OUTPUT );
+	gpioWrite( DHT_PIN, 0 );
+	time_sleep( 0.018 );
 
 	/* prepare to read the pin */
-	pinMode( DHT_PIN, INPUT );
+	gpioSetMode( DHT_PIN, PI_INPUT );
 
 	/* detect change and read data */
 	for ( i = 0; i < MAX_TIMINGS; i++ )
 	{
 		counter = 0;
-		while ( digitalRead( DHT_PIN ) == laststate )
+		while ( gpioRead( DHT_PIN ) == laststate )
 		{
 			counter++;
-			delayMicroseconds( 1 );
+			//delayMicroseconds( 1 );
+			//time_sleep(0.000001);
+			gpioDelay(1);
 			if ( counter == 255 )
 			{
 				break;
 			}
 		}
-		laststate = digitalRead( DHT_PIN );
+		laststate = gpioRead( DHT_PIN );
 
 		if ( counter == 255 )
 			break;
@@ -92,13 +96,13 @@ int main( void )
 	
 	fprintf( stdout,"Raspberry Pi DHT22 temperature/humidity test\n" );
 
-	if ( wiringPiSetup() == -1 )
+	if ( gpioInitialise() < 0 )
 		exit( 1 );
 
-	while ( tests<20 )
+	while ( tests<30 )
 	{
 		read_dht_data();
-		delay( 2000 ); /* wait 2 seconds before next read for DHT22 */
+		time_sleep( 2 ); /* wait 2 seconds before next read for DHT22 */
 		tests++;
 	}
 
