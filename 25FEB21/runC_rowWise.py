@@ -1,3 +1,16 @@
+'''
+===================================================
+Program Created on 15th FEB 2021
+
+-> Subprocess to read C build file
+-> Read output from C source file and split values
+-> Insert actual value & observed values (Row-wise) to a MD file
+-> Calculate error rate and insert to MD file
+-> Commit the changes to Github Repository
+===================================================
+'''
+
+
 import subprocess
 print("OUTPUT:")
 
@@ -19,7 +32,7 @@ print(f'Temperature: {val[0]} , {val[1]}')
 
 print('Writing to file....')
 
-actual_val = 2
+actual_val = 5
 
 def insertData( fileName, values ):
     data = []
