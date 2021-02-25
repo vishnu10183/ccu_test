@@ -3,9 +3,9 @@
 ### *- Set Priority(-20), Set Affinity to Core 2*
 ### *- DHT22 for Temperature Factor (Avg. of 2 readings)*
 ### *- Material Used : Metal*
-### *- No. of Observations = 10*
+### *- No. of Observations = 10 @ 2ms interval*
 ### *- Height of HC-SR04 from test floor = 14.5 cm*
-### *- Python Code to automate storing & finding error rate.
+### *- Python Code to automate storing & finding error rate.*
 
 Actual | Temp. 1 | Temp. 2 | Obs. 1 | Obs. 2 | Obs. 3 | Obs. 4 | Obs. 5 | Obs. 6 | Obs. 7 | Obs. 8 | Obs. 9 | Obs. 10 | Repeat Value | Error Rate
 ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----
@@ -58,4 +58,5 @@ Actual | Temp. 1 | Temp. 2 | Obs. 1 | Obs. 2 | Obs. 3 | Obs. 4 | Obs. 5 | Obs. 6
  75cm | 29.00 'C | 28.80 'C | 73.221 | 73.325 | 73.325 | 73.273 | 73.325 | 73.343 | 73.273 | 73.273 | 73.343 | 73.273 | 73.272 | -1.728 
  75cm | 28.80 'C | 28.90 'C | 73.321 | 54.903 | 72.937 | 55.514 | 73.443 | 54.223 | 73.826 | 54.903 | 72.553 | 56.543 | 54.903 | -20.097 
  75cm | 28.90 'C | 28.90 'C | 73.338 | 54.973 | 73.268 | 55.322 | 72.361 | 55.688 | 72.047 | 56.612 | 71.140 | 57.519 | 73.338 | -1.662 
+ 75cm | 28.90 'C | 29.00 'C | 73.124 | 54.669 | 73.176 | 55.541 | 72.252 | 55.820 | 72.008 | 56.134 | 71.711 | 56.151 | 73.123 | -1.877 
  
