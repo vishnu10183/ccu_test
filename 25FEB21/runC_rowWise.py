@@ -73,7 +73,7 @@ def insertData( fileName, values ):
     
 
 
-insertData( 'ultraS_height_14cm.md', val ) # data starts @ 12th Line
+insertData( 'ultraS_14cm_5ms.md', val ) # data starts @ 12th Line
 
 print("Program Completed.")
 
