@@ -63,3 +63,12 @@ def insertData( fileName, values ):
 insertData( 'ultraS_height_14cm.md', val ) # data starts @ 12th Line
 
 print("Program Completed.")
+
+# Committing to GIT
+#tmp=subprocess.call( ["cd", "/home/pi/VishnuM/Aurora-CCU/TestCodes"])
+tmp=subprocess.call( ["git", "add", "."], cwd="/home/pi/VishnuM/Aurora-CCU/TestCodes")
+print(tmp)
+tmp=subprocess.call( ["git", "commit", "-m", '"Updated 25FEB"'], cwd="/home/pi/VishnuM/Aurora-CCU/TestCodes")
+print(tmp)
+tmp=subprocess.call( ["git", "push", "-u", "origin", "RPi4", "--force"], cwd="/home/pi/VishnuM/Aurora-CCU/TestCodes")
+print(tmp)
