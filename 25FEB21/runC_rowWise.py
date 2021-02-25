@@ -32,7 +32,7 @@ print(f'Temperature: {val[0]} , {val[1]}')
 
 print('Writing to file....')
 
-actual_val = 80
+actual_val = 85
 
 def insertData( fileName, values ):
     data = []
