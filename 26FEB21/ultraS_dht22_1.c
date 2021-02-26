@@ -42,7 +42,7 @@ cpu_set_t  mask;
 #define MAX_TIMINGS		85
 #define obs_no_temp		2
 #define obs_no_ultraS	5
-#define consecutive_interval 10 //ms
+#define consecutive_interval 25 //ms
 #define decimal_digits	3
 
 
