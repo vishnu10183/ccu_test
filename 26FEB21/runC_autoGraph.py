@@ -12,7 +12,7 @@ Program Created on 22-FEB-2021 & Updated on 25-FEB-2021
 
 
 actual_val_list = [10, 15, 20] #[2, 5, 10, 15, 20, 25, 30, 35, 40, 45 ,50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150]
-error_list = []
+error_list = [0.340, 0.405, 1.340]
 
 
 def insertData( fileName, values, actual_val ):
@@ -64,11 +64,14 @@ def git_commit():
 # ------------------------------------
 
 import subprocess
+import matplotlib
 import matplotlib.pyplot as plt
+
 
 if __name__ == '__main__':
     print("OUTPUT:")
 
+    '''
     for actual_val in actual_val_list:
         nxt = input(f"Ready {actual_val}cm ?: ")
         
@@ -83,13 +86,15 @@ if __name__ == '__main__':
         print('Writing to file.....', end= ' ')
 
 
-        insertData( 'ultraS_14cm_10ms.md', val, actual_val ) # data starts @ 12th Line
+        insertData( 'ultraS_14cm_25ms.md', val, actual_val ) # data starts @ 12th Line
         print("Done")
         
-
+    '''
     print("Program Completed.")
 
     print( "Creating Graph....." )
+    matplotlib.use('Agg')
+    
     plt.plot( actual_val_list, error_list  )
     plt.xlabel('Actual distance (cm) ')
     plt.ylabel( 'Error (%)' )
