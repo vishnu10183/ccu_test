@@ -11,9 +11,13 @@ Program Created on 22-FEB-2021 & Updated on 25-FEB-2021
 '''
 
 
-actual_val_list = [10, 15, 20] #[2, 5, 10, 15, 20, 25, 30, 35, 40, 45 ,50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150]
-error_list = [0.340, 0.405, 1.340]
+actual_val_list = [2, 5, 10, 15, 20, 25, 30, 35, 40, 45 ,50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150]
+error_list = []
 
+# File Names
+c_build_file = "ultraS_dht22_1"
+md_file = 'ultraS_14cm_25ms.md'
+graph_file = 'error_1.png'
 
 def insertData( fileName, values, actual_val ):
         data = []
@@ -71,11 +75,11 @@ import matplotlib.pyplot as plt
 if __name__ == '__main__':
     print("OUTPUT:")
 
-    '''
+    
     for actual_val in actual_val_list:
         nxt = input(f"Ready {actual_val}cm ?: ")
         
-        tmp=subprocess.check_output( ["sudo", "./ultraS_dht22_1"]) # build file name
+        tmp=subprocess.check_output( ["sudo", "./"+c_build_file]) # build file name
 
         val = str(tmp).split('\\n')
         val[0] = val[0].split('"')[1]
@@ -86,20 +90,22 @@ if __name__ == '__main__':
         print('Writing to file.....', end= ' ')
 
 
-        insertData( 'ultraS_14cm_25ms.md', val, actual_val ) # data starts @ 12th Line
+        insertData( md_file, val, actual_val ) # data starts @ 12th Line
         print("Done")
         
-    '''
+    
     print("Program Completed.")
 
-    print( "Creating Graph....." )
+    print( "Creating Graph.....", end= ' ' )
     matplotlib.use('Agg')
     
     plt.plot( actual_val_list, error_list  )
     plt.xlabel('Actual distance (cm) ')
     plt.ylabel( 'Error (%)' )
     plt.title( 'Actual Distance Vs Error' )
-    plt.show()
+    plt.savefig( graph_file )
+
+    print( 'DONE' )
     
     # Committing to GIT
     git_commit()
