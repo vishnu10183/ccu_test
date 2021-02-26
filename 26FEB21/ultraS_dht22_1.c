@@ -140,17 +140,26 @@ float max_repeat( float arr[] ){
 		
 		// Convert reading to n-decimal precision
 		temp = arr[lp] * pow(10, decimal_digits);
-		arr[lp] = (temp*1.0) / pow(10, decimal_digits);
+		arr[lp] = temp;
+		arr[lp] /= pow(10, decimal_digits);
+	}
+	
+	if( DEBUG ){
+		fprintf( stdout, "\n\nConverted Readings:\n" );
+		for( lp=0; lp < obs_no_ultraS; lp++  )
+				fprintf( stdout, "%f\n", arr[lp] );
 	}
 	
 	// Find most-repeated value
 	for ( lp=0; lp < obs_no_ultraS; lp++ ){
-		temp_c = 0;
+		temp_c = 1;
 		for( indx = 0; indx < lp; indx++ )
 			if( arr[indx] == arr[lp] )
 				++temp_c;
 				
 		if( temp_c > maxCount ){
+			if(DEBUG)
+				fprintf(stdout, "MaxCount: %d and MAxVal: %f\n", temp_c, arr[lp] );
 			maxCount = temp_c;
 			maxVal = arr[ lp ];
 		}
