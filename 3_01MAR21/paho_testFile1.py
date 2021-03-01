@@ -23,9 +23,10 @@ if __name__ == '__main__':
     ourClient = mqtt.Client( "Pi4-MQTT" ) # Create MQTT Client Object
     
     ourClient.on_connect = onConnect # Connection call-back function
-    ourClient.connect( "192.168.4.114"  ) # Broker IP address
+    ourClient.username_pw_set(username="vishnu",password="password")
+    ourClient.connect( "192.168.4.35"  ) # Broker IP address
 
     # Publish a Message to "test-Pi" Topic
-    ourClient.publish( "test-Pi" , " Paho..." )
+    ourClient.publish( "test-PC" , "Checking Paho..." )
 
     time.sleep(1)
