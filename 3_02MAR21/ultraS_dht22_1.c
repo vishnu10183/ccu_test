@@ -226,7 +226,7 @@ float max_repeat( float *ptr ){
 void *ultraS( void *param ){
 	int core_id = 2;
 	
-	int tests=0, temp;
+	int tests=0; //, temp;
 	
 	if ( wiringPiSetup() == -1 )
 		exit( 1 );
@@ -237,13 +237,14 @@ void *ultraS( void *param ){
 	{
 		delay( 2000 ); /* wait 2 seconds before next read for DHT22 */
 		fprintf( stdout, "%.2f 'C\n", read_dht_temp( 'c' ) );
-		tempC += read_dht_temp( 'c' ) ;
+		//tempC += read_dht_temp( 'c' ) ;
+		tempC = read_dht_temp( 'c' ) ;
 		tests++;
 	}
-	tempC /= 2.0;
+	//tempC /= 2.0;
 	// Round-off to one decimal
-	temp = tempC * 10; 
-	tempC = (temp*1.0) / 10; 
+	//temp = tempC * 10; 
+	//tempC = (temp*1.0) / 10; 
 	
 	if (DEBUG)
 		fprintf( stdout, "\nStarting..\n\n");
