@@ -16,8 +16,8 @@ error_list = []
 
 # File Names
 c_build_file = "ultraS_dht22_1"
-md_file = 'ultraS_14cm_25ms.md'
-graph_file = 'error_1.png'
+md_file = 'ultraS_14cm_25ms_2.md'
+graph_file = 'error_2.png'
 
 def insertData( fileName, values, actual_val ):
         data = []
