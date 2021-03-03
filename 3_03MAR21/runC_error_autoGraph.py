@@ -9,6 +9,8 @@ Program Created on 22-FEB-2021 & Updated on 03-MAR-2021
 -> Commit the changes to Github Repository
 
 Updated:
+-> GIT commit function from separate Python file.
+-> Edited insertData( ) of splitting last dataLine.
 -> For each range of distance, Average errors from files in data directory.
 -> Insert corrected value and current error rate
 ===============================================================================
@@ -19,7 +21,7 @@ actual_val_list = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1
 error_list = []
 error_terms = [ -0.2, -0.72, -0.80, -0.82, -0.84, -0.85, -0.85, -0.85, -0.85,
                 -0.80, -0.75, -0.70, -0.65, -0.60, -0.56, -0.55, -0.54, -0.54, -0.54 ]
-term_count = 0
+
 
 
 # File Names
@@ -38,7 +40,7 @@ def insertData( fileName, values, actual_val ):
         #print( 'no. of output values:', len(values) )
 
         # 1st column is actual value in cm
-        data[ lastLine ] = data[lastLine].split('\n')[0] + str(actual_val) + 'cm | \n'
+        data[ lastLine ] = data[lastLine].split('\n')[0] + str(actual_val) + 'cm | '
 
         # Next columns are TEMP, 5 observations, repeat count, Most-repeated Value
         for indx,each in enumerate(values):
@@ -46,13 +48,14 @@ def insertData( fileName, values, actual_val ):
             if indx == (len(values)-1): # last value is double quote
                 each = values[len(values)-2] # Rewrite each to calculate error-rate
                 break
+        
             #print(indx ,'<--->',each)
-            data[ lastLine ] = data[lastLine].split('\n')[0] + each + ' | \n'
-
+            data[lastLine] += each + ' | '
+        
 
         # Final column is Error rate of Most-repeated value ( i.e, each )
         err = round( float(each)- actual_val, 3)
-        data[ lastLine ] = data[lastLine].split('\n')[0] + str( err ) + '\n '
+        data[ lastLine ] +=  str( err ) + '\n '
 
         with open( fileName , 'w' ) as fw:
             fw.writelines( data )
@@ -64,36 +67,37 @@ def insertNewData( fileName, values, actual_val ):
             data = fr.readlines()
 
         lastLine = len(data)-1
-        #print( 'No. of lines in MD file:', len(data) )
-        #print( 'no. of output values:', len(values) )
 
         # 1st column is actual value in cm
-        data[ lastLine ] = data[lastLine].split('\n')[0] + str(actual_val) + 'cm | \n'
+        # Next columns are TEMP, repeat count, Most-repeated Value
+        data[ lastLine ] = data[lastLine].split('\n')[0]                \
+                                + str(actual_val) + 'cm | '             \
+                                + values[0] + ' | ' + values[1] + ' | ' \
+                                + values[len(values)-3] + ' | '         \
+                                + values[len(values)-2] + ' | '
 
-        # Next columns are TEMP, 5 observations, repeat count, Most-repeated Value
-        for indx,each in enumerate(values):
-            
-            if indx == (len(values)-1): # last value is double quote
-                each = values[len(values)-2] # Rewrite each to calculate error-rate
-                break
-            #print(indx ,'<--->',each)
-            data[ lastLine ] = data[lastLine].split('\n')[0] + each + ' | \n'
+        
+        repeat_val = float( values[len(values)-2] )
+        
 
+        # Next column is Error rate of Most-repeated value ( i.e, each )
+        err = round( repeat_val - actual_val, 3)
+        data[ lastLine ] +=  str( err ) + ' | '
 
-        # Final column is Error rate of Most-repeated value ( i.e, each )
-        err = round( float(each)- actual_val, 3)
-        data[ lastLine ] = data[lastLine].split('\n')[0] + str( err ) + '\n '
+       
+        # Add error term to Most-repeated value ( i.e, each )
+        new_val = repeat_val + error_terms.pop(0)
+        
+        err = round( new_val- actual_val, 3)
+
+        data[ lastLine ] +=  str( new_val ) + ' | '     # New Value
+        data[ lastLine ] +=  str( err ) + ' \n '        # New Error Rate
+
 
         with open( fileName , 'w' ) as fw:
             fw.writelines( data )            
 
-        # Add error term to Most-repeated value ( i.e, each )
-        new_val = each + error_terms[ term_count ]
-        term_count += 1
-        err = round( float(new_val)- actual_val, 3)
 
-
-        
         # Error list to plot graph
         error_list.append( 100 * abs( err ) / actual_val )
 
@@ -101,14 +105,9 @@ def insertNewData( fileName, values, actual_val ):
 
 
 
-
-
-
-
-
-# ------------------------------------
-# ---------------------- MAIN BODY ---
-# ------------------------------------
+# ------------------------------------------------------------------
+# ---------------------------------------------------- MAIN BODY ---
+# ------------------------------------------------------------------
 
 import subprocess
 import matplotlib
