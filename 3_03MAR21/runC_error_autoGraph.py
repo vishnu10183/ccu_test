@@ -86,7 +86,7 @@ def insertNewData( fileName, values, actual_val ):
 
        
         # Add error term to Most-repeated value ( i.e, each )
-        new_val = repeat_val + error_terms.pop(0)
+        new_val = repeat_val - error_terms.pop(0)
         
         err = round( new_val- actual_val, 3)
 
