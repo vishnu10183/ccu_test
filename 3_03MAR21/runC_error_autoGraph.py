@@ -19,16 +19,16 @@ Updated:
 
 actual_val_list = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 error_list = []
-error_terms = [ -0.2, -0.72, -0.80, -0.82, -0.84, -0.85, -0.85, -0.85, -0.85,
+error_terms = [ 0.2, -0.72, -0.80, -0.82, -0.84, -0.85, -0.85, -0.85, -0.85,
                 -0.80, -0.75, -0.70, -0.65, -0.60, -0.56, -0.55, -0.54, -0.54, -0.54 ]
 
 
 
 # File Names
 c_build_file = "ultraS_dht22_1"
-md_file = 'ultraS_14cm_25ms_1.md'
-new_md_file = 'ultraS_newError_1.md'
-graph_file = 'error_1.png'
+md_file = 'ultraS_14cm_25ms_2.md'
+new_md_file = 'ultraS_newError_2.md'
+graph_file = 'error_2.png'
 
 def insertData( fileName, values, actual_val ):
         data = []
@@ -80,13 +80,14 @@ def insertNewData( fileName, values, actual_val ):
         repeat_val = float( values[len(values)-2] )
         
 
-        # Next column is Error rate of Most-repeated value ( i.e, each )
+        # Next column is Error rate of Most-repeated value 
         err = round( repeat_val - actual_val, 3)
         data[ lastLine ] +=  str( err ) + ' | '
 
        
-        # Add error term to Most-repeated value ( i.e, each )
+        # Add error term to Most-repeated value
         new_val = repeat_val - error_terms.pop(0)
+        
         
         err = round( new_val- actual_val, 3)
 
