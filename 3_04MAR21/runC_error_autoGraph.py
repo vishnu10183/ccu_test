@@ -28,29 +28,31 @@ error_terms = [ 0.2, -0.72, -0.80, -0.82, -0.84, -0.85, -0.85, -0.85, -0.85,
 
 # File Names
 c_build_file = "ultraS_dht22_1"
-result_dir = '\\Results\\'
+template_dir = 'Templates/'
+result_dir = 'Results/'
 md_file = 'ultraS_14cm_25ms.md'
 new_md_file = 'ultraS_newError.md'
 graph_file = 'error.png'
 
 exp_count = '1_'
 
+import os
 from os.path import exists as file_exists
 def copy_template( fileName ):
         data = []
-        with open( fileName , 'r' ) as fr:
+        with open( os.path.join(template_dir , fileName) , 'r' ) as fr:
                 data = fr.readlines()
-        with open( result_dir + exp_count + fileName , 'w' ) as fr:
+        with open( os.path.join(result_dir , exp_count + fileName) , 'w' ) as fw:
                 fw.writelines( data )
                 
 
 def insertData( fileName, values, actual_val ):
         data = []
 
-        if not file_exists( result_dir + exp_count + fileName ):
+        if not file_exists( os.path.join(result_dir , exp_count + fileName) ):
                 copy_template( fileName )
                 
-        fileName = result_dir + exp_count + fileName
+        fileName = os.path.join(result_dir , exp_count + fileName)
         
         with open( fileName , 'r' ) as fr:
             data = fr.readlines()
@@ -84,10 +86,10 @@ def insertData( fileName, values, actual_val ):
 def insertNewData( fileName, values, actual_val ):
         data = []
 
-        if not file_exists( result_dir + exp_count + fileName ):
+        if not file_exists( os.path.join(result_dir , exp_count + fileName) ):
                 copy_template( fileName )
                 
-        fileName = result_dir + exp_count + fileName
+        fileName = os.path.join(result_dir , exp_count + fileName)
         
         with open( fileName , 'r' ) as fr:
             data = fr.readlines()
@@ -112,7 +114,7 @@ def insertNewData( fileName, values, actual_val ):
 
        
         # Add error term to Most-repeated value
-        new_val = repeat_val - error_terms.pop(0)
+        new_val = round( repeat_val - error_terms.pop(0), 3)
         
         
         err = round( new_val- actual_val, 3)
