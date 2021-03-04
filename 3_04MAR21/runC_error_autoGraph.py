@@ -22,7 +22,7 @@ Updated:
 actual_val_list = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 error_list = []
 error_terms = [ 0.2, -0.72, -0.80, -0.82, -0.84, -0.85, -0.85, -0.85, -0.85,
-                -0.80, -0.75, -0.70, -0.65, -0.60, -0.56, -0.55, -0.54, -0.54, -0.54 ]
+                -0.85, -0.5, -0.50, -0.5, -0.60, -0.56, -0.55, -0.54, -0.54, -0.54 ]
 
 
 
@@ -34,7 +34,7 @@ md_file = 'ultraS_14cm_25ms.md'
 new_md_file = 'ultraS_newError.md'
 graph_file = 'error.png'
 
-exp_count = '1_'
+exp_count = '2_'
 
 import os
 from os.path import exists as file_exists
