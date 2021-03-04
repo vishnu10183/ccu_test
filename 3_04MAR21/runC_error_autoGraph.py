@@ -34,7 +34,7 @@ md_file = 'ultraS_14cm_25ms.md'
 new_md_file = 'ultraS_newError.md'
 graph_file = 'error.png'
 
-exp_count = '2_'
+exp_count = input("Experiment No.? ") + '_'
 
 import os
 from os.path import exists as file_exists
