@@ -29,8 +29,12 @@
 #include <linux/gpio.h>     //GPIO
 #include <linux/interrupt.h>
 
-#include "deviceFile_opr.h"
-#include "uSec.h"
+//#include <sys/resource.h>
+//#include <unistd.h> // for getpid()
+
+
+//#include "deviceFile_opr.h"
+//#include "uSec.h"
 
 // GPIO macros
 #define TRIG  22
@@ -93,7 +97,61 @@ static struct file_operations fops =
   .release        = etx_release,
 };
  
+  
+static int etx_open(struct inode *inode, struct file *file)
+{
+  pr_info("Device File Opened...!!!\n");
+  return 0;
+}
  
+static int etx_release(struct inode *inode, struct file *file)
+{
+  pr_info("Device File Closed...!!!\n");
+  return 0;
+}
+  
+ static ssize_t etx_read(struct file *filp, 
+                char __user *buf, size_t len, loff_t *off)
+{
+  uint8_t gpio_state = 0;
+  
+  //reading GPIO value
+  gpio_state = gpio_get_value(TRIG);
+  
+  //write to user
+  len = 1;
+  if( copy_to_user(buf, &gpio_state, len) > 0) {
+    pr_err("ERROR: Not all the bytes have been copied to user\n");
+  }
+  
+  pr_info("Read function : TRIG = %d \n", gpio_state);
+  
+  return 0;
+}
+
+
+
+static ssize_t etx_write(struct file *filp, 
+                const char __user *buf, size_t len, loff_t *off)
+{
+  uint8_t rec_buf[10] = {0};
+  
+  if( copy_from_user( rec_buf, buf, len ) > 0) {
+    pr_err("ERROR: Not all the bytes have been copied from user\n");
+  }
+  
+  pr_info("Write Function : TRIG Set = %c\n", rec_buf[0]);
+  
+  if ( rec_buf[0] == '1' ) 
+        gpio_set_value(TRIG, 1); // set the GPIO value to HIGH
+    else if ( rec_buf[0] == '0' )
+        gpio_set_value(TRIG, 0); // set the GPIO value to LOW
+    else 
+        pr_err("Unknown command : Please provide either 1 or 0 \n");
+  
+  return len;
+}
+
  
  
  
@@ -101,12 +159,13 @@ static struct file_operations fops =
  
 static int __init etx_driver_init(void)
 {
+	/*
 		int ret = setpriority();
 		if( ret == -1 )
 			pr_err("[ERROR] Could not set priority\n");
-			
+	*/
 		/*Allocating Major number*/
-		if( alloc_chrdev_region( &dev, 0, 1, "etx_Dev") < 0 ) {
+		if( (alloc_chrdev_region( &dev, 0, 1, "etx_Dev")) < 0 ) {
 			pr_err("Cannot allocate major number\n");
 			goto r_unreg;
 		}
@@ -122,13 +181,13 @@ static int __init etx_driver_init(void)
 		}
 
 		/*Creating struct class*/
-		if( dev_class = class_create(THIS_MODULE,"etx_class")  == NULL ){
+		if( (dev_class = class_create(THIS_MODULE,"etx_class"))  == NULL ){
 			pr_err("Cannot create the struct class\n");
 			goto r_class;
 		}
 
 		/*Creating device*/
-		if(  device_create( dev_class, NULL, dev, NULL, "etx_device" )  == NULL  ){
+		if(  (device_create( dev_class, NULL, dev, NULL, "etx_device" ))  == NULL  ){
 			pr_err( "Cannot create the Device \n"); 
 			goto r_device;
 		}

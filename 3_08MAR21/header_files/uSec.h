@@ -1,6 +1,9 @@
-
+//#define _POSIX_C_SOURCE 199309L
+#define _POSIX_C_SOURCE 200809L
+//#include <linux/time.h>
 #include <linux/ktime.h>
-//#include <linux/timekeeping.h>
+#include <linux/timekeeping.h>
+#include <linux/kernel.h>
 
 static unsigned long read_current_us(void)
 {

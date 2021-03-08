@@ -1,0 +1,7 @@
+# Device driver files
+*.cmd
+*.ko
+*.mod
+*.o
+*.symvers
+*.order
