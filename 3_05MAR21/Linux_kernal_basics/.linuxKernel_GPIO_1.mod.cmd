@@ -1,0 +1,1 @@
+cmd_/home/pi/VishnuM/Aurora-CCU/TestCodes/3_05MAR21/Linux_kernal_basics/linuxKernel_GPIO_1.mod := { echo  /home/pi/VishnuM/Aurora-CCU/TestCodes/3_05MAR21/Linux_kernal_basics/linuxKernel_GPIO_1.o;  echo; } > /home/pi/VishnuM/Aurora-CCU/TestCodes/3_05MAR21/Linux_kernal_basics/linuxKernel_GPIO_1.mod

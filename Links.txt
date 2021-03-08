@@ -1,0 +1,19 @@
+
+Device driver kernel print Log Levels:
+https://elinux.org/Debugging_by_printing
+
+Jiffies <--> microsecond:
+http://www.kylesconverter.com/time/jiffies-to-microseconds
+http://www.kylesconverter.com/time/microseconds-to-jiffies
+
+Microseconds tick (getnstimeofday):
+https://github.com/raspberrypi/linux/commit/a8f400dc12f70c4460dd162e3d8d617cf7d01493
+
+Device Driver Explanation with code snippets:
+https://www.oreilly.com/library/view/linux-device-drivers/0596005903/ch07.html
+
+Device Driver - Tutorial
+https://embetronicx.com/tutorials/linux/device-drivers/gpio-driver-basic-using-raspberry-pi/
+
+Device driver file:
+    https://embetronicx.com/tutorials/linux/device-drivers/device-file-creation-for-character-drivers/
