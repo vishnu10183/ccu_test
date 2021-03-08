@@ -16,7 +16,7 @@
 *																									                                                  *
 ****************************************************************************************************/
 
-
+//#define _BSD_SOURCE
 #include <linux/kernel.h>
 #include <linux/init.h>
 #include <linux/module.h>
@@ -30,7 +30,7 @@
 #include <linux/interrupt.h>
 
 //#include <sys/resource.h>
-//#include <unistd.h> // for getpid()
+#include <linux/unistd.h> // for getpid()
 
 
 //#include "deviceFile_opr.h"
@@ -60,7 +60,10 @@ static irqreturn_t gpio_irq_handler( int irq, void *dev_id )
 		local_irq_save(flags);
 		
 		
-		pr_info("Trigger Occurred : %d ", uSeconds );
+		pr_info("Trigger Occurred : %d \n", uSeconds );
+		if( usleep(10) != -1 )
+			pr_info("Trigger Occurred : %d \n", uSeconds );
+		
 		local_irq_restore(flags);
 		
 		return IRQ_HANDLED;
