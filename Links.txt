@@ -17,3 +17,12 @@ https://embetronicx.com/tutorials/linux/device-drivers/gpio-driver-basic-using-r
 
 Device driver file:
     https://embetronicx.com/tutorials/linux/device-drivers/device-file-creation-for-character-drivers/
+
+usleep ERROR:
+https://stackoverflow.com/questions/10053788/implicit-declaration-of-function-usleep
+
+HC-SR04 device driver github:
+https://github.com/cog777/hc-sr04_driver
+
+[ERROR] function declaration isn't a prototype:
+https://stackoverflow.com/questions/42125/function-declaration-isnt-a-prototype
