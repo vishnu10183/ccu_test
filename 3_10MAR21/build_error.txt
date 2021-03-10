@@ -15,3 +15,14 @@ make[2]: *** Deleting file '/home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/Modu
 make[1]: *** [Makefile:1708: modules] Error 2
 make[1]: Leaving directory '/home/pi/kernel/linux'
 make: *** [Makefile:7: all] Error 2
+
+
+------------- SUCCESSFUL-------------------
+pi@raspberrypi:~/VishnuM/Aurora-CCU/TestCodes/3_10MAR21 $ make
+make -C /lib/modules/5.10.20-v7l+/build M=/home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21 modules
+make[1]: Entering directory '/home/pi/kernel/linux'
+  CC [M]  /home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/driver_ultraS_2.o
+  MODPOST /home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/Module.symvers
+  CC [M]  /home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/driver_ultraS_2.mod.o
+  LD [M]  /home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/driver_ultraS_2.ko
+make[1]: Leaving directory '/home/pi/kernel/linux'

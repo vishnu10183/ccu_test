@@ -86,7 +86,7 @@ static irqreturn_t gpio_irq_handler( int irq, void *dev_id )
 		cm = (float)( ( duration / 20000.0 ) * ultraSpeed );
 		//cm = 12.2; 
 		//pr_info("Distance (cm) : %.2f \n", cm );
-		printk(KERN_INFO"Distance (cm) : %d \n", (int) cm );
+		//printk(KERN_INFO"Distance (cm) : %d \n", (int) cm );
 		
 		
 		local_irq_restore(flags);
