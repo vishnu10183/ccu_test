@@ -45,6 +45,7 @@ _BSD_SOURCE ||
 
 //#include "deviceFile_opr.h"
 //#include "uSec.h"
+#include "dht22.h"
 
 // GPIO macros
 #define TRIG  22
@@ -59,13 +60,15 @@ unsigned long uSeconds = 0, startClock;
 // IRQ number
 unsigned int GPIO_irqNumber;
 
+
+
 // Interrupt handler ( raising edge ) 
 static irqreturn_t gpio_irq_handler( int irq, void *dev_id ) 
 {
 		static unsigned long flags = 0;
-		volatile unsigned int tempC, duration = 0;
+		volatile unsigned int tempC, duration = 0, cm;
 		volatile ktime_t start;
-		float ultraSpeed= 0.0, cm = 0.0;
+		//static float ultraSpeed= 0.0, cm = 0.0; //, tempry;
 
 		local_irq_save(flags);
 		
@@ -80,14 +83,21 @@ static irqreturn_t gpio_irq_handler( int irq, void *dev_id )
 		pr_info("Duration : %d \n", duration );
 	
 		// Calculate Distance
-		tempC = 25;
-		ultraSpeed = 331.3 + ( 0.606 * tempC );
+		tempC = read_dht_temp('c');
+		//ultraSpeed = 331.3 + ( 0.606 * tempC );
 		//ultraSpeed = 331.3;
-		cm = (float)( ( duration / 20000.0 ) * ultraSpeed );
+		cm = (unsigned int) ( duration / 20000 ) ;
+		cm *= (unsigned int)(331.3 + ( 606 * tempC / 1000 )) ;
+		//tempC = cm * 1;
 		//cm = 12.2; 
+		//pr_alert("Distance (cm) : %.2f \n", cm );
 		//pr_info("Distance (cm) : %.2f \n", cm );
+		pr_info("Distance (cm) : %d \n", cm );
+		//pr_info("Distance (cm) : %d \n", tempC );
 		//printk(KERN_INFO"Distance (cm) : %d \n", (int) cm );
-		
+		//tempry = cm;
+		//pr_info("Distance (cm) : %d \n", tempry );
+		//pr_info("Duration : %d \n", duration );
 		
 		local_irq_restore(flags);
 		
@@ -252,12 +262,12 @@ static int __init etx_driver_init(void)
 		pr_info("GPIO_irqNumber = %d\n", GPIO_irqNumber);
 		
 		if ( request_irq( GPIO_irqNumber,             //IRQ number
-										(void *)gpio_irq_handler,   //IRQ handler
-										IRQF_TRIGGER_RISING,        //Handler will be called in raising edge
-										"etx_device",               //used to identify the device name using this IRQ
-										NULL) ) {                    //device id for shared IRQ
-				pr_err("my_device: cannot register IRQ ");
-				goto r_ECHO;
+				(void *)gpio_irq_handler,   //IRQ handler
+				IRQF_TRIGGER_RISING,        //Handler will be called in raising edge
+				"etx_device",               //used to identify the device name using this IRQ
+				NULL) ) {                    //device id for shared IRQ
+			pr_err("my_device: cannot register IRQ ");
+			goto r_ECHO;
 		}
 	 
 		pr_info("Device Driver Insert...Done!!!\n");
@@ -269,7 +279,7 @@ static int __init etx_driver_init(void)
 		udelay(10);
 		gpio_set_value( TRIG, 0); 
 		
-		pr_info("...Done!!!\n");
+		//pr_info("...Done!!!\n");
 		//startClock = sched_clock();
 		return 0;
 
@@ -315,4 +325,4 @@ module_exit(etx_driver_exit);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Aurora-CCU");
 MODULE_DESCRIPTION("A HC-SR04 device driver");
-MODULE_VERSION("1.0.1");
+MODULE_VERSION("1.1.1");

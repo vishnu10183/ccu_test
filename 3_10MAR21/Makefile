@@ -1,3 +1,4 @@
+ccflags-y += -lwiringPi
 obj-m += driver_ultraS_2.o
 
 KDIR = /lib/modules/$(shell uname -r)/build

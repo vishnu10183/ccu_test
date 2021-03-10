@@ -116,7 +116,7 @@ float read_dht_temp( char ch_t )
 		//fprintf( stdout, "Temperature = %.1f *C (%.1f *F)\n",  c, f );
 	}else  {
 		//fprintf( stdout,"\nData not good, skip" );
-		delay( 1500 );
+		delay( 500 );
 		return( read_dht_temp( ch_t ) ); // re-read the temp
 	}
 	
