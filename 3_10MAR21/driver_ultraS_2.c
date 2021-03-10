@@ -63,27 +63,31 @@ unsigned int GPIO_irqNumber;
 static irqreturn_t gpio_irq_handler( int irq, void *dev_id ) 
 {
 		static unsigned long flags = 0;
-		volatile unsigned int measured_data = 0;
+		volatile unsigned int tempC, duration = 0;
 		volatile ktime_t start;
-	
+		float ultraSpeed= 0.0, cm = 0.0;
 
 		local_irq_save(flags);
 		
 
 		start = ktime_get();
 		
-		udelay(5);
+		while( gpio_get_value( ECHO ) != 0 ); // wait till ECHO pin gets LOW
 		
-
+		// Calculate duration of ECHO signal
+		duration =  (unsigned int) ktime_to_ns(ktime_sub(ktime_get(), start));
+		duration /= 1000; // convert nanosecond to microsecond
+		pr_info("Duration : %d \n", duration );
+	
+		// Calculate Distance
+		tempC = 25;
+		ultraSpeed = 331.3 + ( 0.606 * tempC );
+		//ultraSpeed = 331.3;
+		cm = (float)( ( duration / 20000.0 ) * ultraSpeed );
+		//cm = 12.2; 
+		//pr_info("Distance (cm) : %.2f \n", cm );
+		printk(KERN_INFO"Distance (cm) : %d \n", (int) cm );
 		
-		
-		//s64 diff_time = ktime_to_ns(ktime_sub( ktime_get(), start));
-		//measured_data =  (unsigned int) diff_time;
-		
-		measured_data =  (unsigned int) ktime_to_ns(ktime_sub(ktime_get(), start));
-		measured_data /= 1000; // convert nanosecond to microsecond
-		
-		pr_info("Trigger Occurred : %d \n", measured_data );
 		
 		local_irq_restore(flags);
 		

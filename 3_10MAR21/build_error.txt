@@ -1,0 +1,17 @@
+pi@raspberrypi:~/VishnuM/Aurora-CCU/TestCodes/3_10MAR21 $ make
+make -C /lib/modules/5.10.20-v7l+/build M=/home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21 modules
+make[1]: Entering directory '/home/pi/kernel/linux'
+  CC [M]  /home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/driver_ultraS_2.o
+  MODPOST /home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/Module.symvers
+ERROR: modpost: "__aeabi_f2iz" [/home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/driver_ultraS_2.ko] undefined!
+ERROR: modpost: "__aeabi_ddiv" [/home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/driver_ultraS_2.ko] undefined!
+ERROR: modpost: "__aeabi_f2d" [/home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/driver_ultraS_2.ko] undefined!
+ERROR: modpost: "__aeabi_d2f" [/home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/driver_ultraS_2.ko] undefined!
+ERROR: modpost: "__aeabi_dadd" [/home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/driver_ultraS_2.ko] undefined!
+ERROR: modpost: "__aeabi_dmul" [/home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/driver_ultraS_2.ko] undefined!
+ERROR: modpost: "__aeabi_ui2d" [/home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/driver_ultraS_2.ko] undefined!
+make[2]: *** [scripts/Makefile.modpost:111: /home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/Module.symvers] Error 1
+make[2]: *** Deleting file '/home/pi/VishnuM/Aurora-CCU/TestCodes/3_10MAR21/Module.symvers'
+make[1]: *** [Makefile:1708: modules] Error 2
+make[1]: Leaving directory '/home/pi/kernel/linux'
+make: *** [Makefile:7: all] Error 2

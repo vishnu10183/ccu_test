@@ -4,7 +4,7 @@
 *						                                                  	*
 *	File Name	:	driver_ultraS_1.c				                        *
 *	Created on 	:	05-MARCH-2021                                                           *
-* 	Updated on    	:	09-MARCH-2021 					                        *
+* 	Updated on    	:	10-MARCH-2021 					                        *
 *	Topic		:	Ultrasonic Sensor driver using Linux Kernel			        *
 *	Source Code	:	https://github.com/Embetronicx/Tutorials/tree/master/Linux/Device_Driver*
 * 	Author        	:	EmbeTronicX							       	*
@@ -63,27 +63,32 @@ unsigned int GPIO_irqNumber;
 static irqreturn_t gpio_irq_handler( int irq, void *dev_id ) 
 {
 		static unsigned long flags = 0;
-		volatile unsigned int measured_data = 0;
+		volatile unsigned int duration = 0, tempC = 25;
 		volatile ktime_t start;
-	
-
+		volatile float ultraSpeed=0.0, cm=0.0;
 		local_irq_save(flags);
 		
 
 		start = ktime_get();
 		
-		udelay(5);
-		
-
+		while( gpio_get_value( ECHO ) != 0 ); // wait till ECHO pin gets LOW
 		
 		
 		//s64 diff_time = ktime_to_ns(ktime_sub( ktime_get(), start));
 		//measured_data =  (unsigned int) diff_time;
 		
-		measured_data =  (unsigned int) ktime_to_ns(ktime_sub(ktime_get(), start));
-		measured_data /= 1000; // convert nanosecond to microsecond
+		duration =  (unsigned int) ktime_to_ns(ktime_sub(ktime_get(), start));
+		duration /= 1000; // convert nanosecond to microsecond
+		pr_info("Duration : %d \n", duration );
 		
-		pr_info("Trigger Occurred : %d \n", measured_data );
+		// Calculate Temperature using DHT22
+		
+		
+		// Calculate Distance
+		ultraSpeed = 331.3 + ( 0.606 * tempC );
+		cm = ( duration / 20000.0 ) * ultraSpeed;
+		pr_info("Distance (cm) : %f \n", cm );
+		
 		
 		local_irq_restore(flags);
 		
@@ -311,4 +316,4 @@ module_exit(etx_driver_exit);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Aurora-CCU");
 MODULE_DESCRIPTION("A HC-SR04 device driver");
-MODULE_VERSION("1.0.1");
+MODULE_VERSION("1.1.1");
