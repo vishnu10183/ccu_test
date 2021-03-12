@@ -40,7 +40,6 @@
 
 
 #define driver_name	"ultraS_driver"
-#define consecutive_interval	25	// milliseconds
 #define mem_size	1024  // kernel buffer size
 
 /************************ MODULE DESCRIPTION ***************************/
@@ -81,10 +80,6 @@ static irqreturn_t gpio_irq_handler( int irq, void *dev_id )
 		duration =  (unsigned int) ktime_to_ns(ktime_sub(ktime_get(), start));
 		duration /= 1000; // convert nanosecond to microsecond
 		pr_info("Duration : %d \n", duration );
-		
-		// Next Trigger after 25ms
-		// msleep( consecutive_interval );
-		//trigger_ultraS();
 		
 		
 		local_irq_restore(flags);
@@ -139,10 +134,6 @@ static int etx_release(struct inode *inode, struct file *file)
  static ssize_t etx_read(struct file *filp, 
                 char __user *buf, size_t len, loff_t *off)
 {
-  //uint8_t uSec = 0;
-  
-  // reading duration
-  //uSec = duration;
   
   // write to user file
   
