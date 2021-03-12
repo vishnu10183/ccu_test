@@ -83,8 +83,8 @@ static irqreturn_t gpio_irq_handler( int irq, void *dev_id )
 		pr_info("Duration : %d \n", duration );
 		
 		// Next Trigger after 25ms
-		msleep( consecutive_interval );
-		trigger_ultraS();
+		// msleep( consecutive_interval );
+		//trigger_ultraS();
 		
 		
 		local_irq_restore(flags);
@@ -167,7 +167,8 @@ static ssize_t etx_write(struct file *filp,
   }
   
   pr_info("Write Function : TRIG Set = %s\n", rec_buf);
-  
+  if( rec_buf[0] == 'a' )
+	trigger_ultraS();
   
   return len;
 }
@@ -250,7 +251,7 @@ static int __init etx_driver_init(void)
 		pr_info("Device Driver Insert...Done!!!\n");
 		
 		/************************ Initial Function *********************************/
-		trigger_ultraS();
+		//trigger_ultraS();
 		
 		return 0;
 
