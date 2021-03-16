@@ -6,19 +6,22 @@
 //#define driver_name	"/dev/ultraS_driver"
 #define consecutive_interval	25	// milliseconds
 
-#define TRIG1  4
-#define ECHO1  17
+#define TRIG1  7 // BCM- 4
+#define ECHO1  0 // BCM-17
 
-#define TRIG2  10
-#define ECHO2  22
+#define TRIG2  12 //BCM-10
+#define ECHO2  3 //BCM-22
 
-int hcsr04_pins[2][2] = { { TRIG1, ECHO1 },
-                            { TRIG2, ECHO2 }
+int hcsr04_pins[2][2] = {  { TRIG1, ECHO1 },
+                             { TRIG2, ECHO2 }
                         };
 
 float readDist_cm( int tempC, int device_no )
 {
-    
+    unsigned int duration = 0;
+    float ultraSpeed;
+    device_no--;
+    //printf("START...\n");	
           pinMode( hcsr04_pins[device_no][0], OUTPUT);
 		  digitalWrite(hcsr04_pins[device_no][0], LOW);
 		  delayMicroseconds(2);
@@ -39,7 +42,7 @@ float readDist_cm( int tempC, int device_no )
 		  
 		  duration =  micros() - duration; // time taken = final time - init time
 
-		  
+		 //printf("DURATION DONE...\n");	 
 
     
     /*********************** Calculate distance ******************************/

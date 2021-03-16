@@ -1,18 +1,18 @@
 
-#define DHT_PIN		2
+#define DHT_PIN		2 // BCM-27
 
 #define MAX_TIMINGS		85
 
 int data[5] = { 0, 0, 0, 0, 0 };
 
 /********************************* DHT22 Temperature function ****************************************/
-int read_dht_temp( float *temp, char ch_t , float *humd )
+int read_dht_temp( int *temp, char ch_t , float *humd )
 {
 	uint8_t laststate	= HIGH;
 	uint8_t counter		= 0;
 	uint8_t j			= 0, i;
 	
-	float c, f;
+	float h, c, f;
 
 	data[0] = data[1] = data[2] = data[3] = data[4] = 0;
 
@@ -60,7 +60,7 @@ int read_dht_temp( float *temp, char ch_t , float *humd )
 	if ( (j >= 40) &&
 	     (data[4] == ( (data[0] + data[1] + data[2] + data[3]) & 0xFF) ) )
 	{
-		float h = (float)((data[0] << 8) + data[1]) / 10;
+		h = (float)((data[0] << 8) + data[1]) / 10;
 		if ( h > 100 )
 		{
 			h = data[0];	// for DHT11
@@ -79,7 +79,7 @@ int read_dht_temp( float *temp, char ch_t , float *humd )
 	}
 	
 	
-	*humid = h;
+	*humd = h;
 	if( ch_t == 'C' || ch_t == 'c' )
 		//return( c );
 		*temp = c;
