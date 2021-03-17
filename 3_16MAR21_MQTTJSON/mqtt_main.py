@@ -133,7 +133,8 @@ if __name__ == '__main__':
         print( "Sending MQTT JSON...." )
 
         #xc, yc, temp, humd
-        paho_mqtt.mqttPublish( val[3], val[5], val[0], val[1] )
+        val[0] = val[0].split(' ')[0]
+        paho_mqtt.mqttPublish( int(float(val[3])), int(float(val[5])), val[0], val[1] )
         print("Done")
     
     print("Program Completed.")
