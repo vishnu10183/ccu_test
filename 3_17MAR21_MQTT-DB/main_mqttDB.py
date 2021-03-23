@@ -24,14 +24,16 @@ import paho_mqtt # paho_mqtt.py
 
 
 if __name__ == '__main__':
+   print("Begin...")
    while True:
+        print("Running c file")
         tmp=subprocess.check_output( ["sudo", "./"+c_build_file]) # build file name
-
+        
         val = str(tmp).split('\\n')
         val[0] = val[0].split('"')[1]
         val[-1] = val[-1].split('"')[0]
-
-
+        
+        print(val)
         print(f'Temperature: {val[0]} , Humidity: {val[1]}')
         print( "Sending MQTT JSON...." )
 

@@ -103,9 +103,10 @@ void *ultraS( void *param ){
 
 	if (DEBUG)
 		fprintf( stdout,"Reading Temperature:\n" );
+		
 	while ( tests < obs_no_temp )
 	{
-		delay( 2000 ); /* wait 2 seconds before next read for DHT22 */
+		delay( 2000 ); // wait 2 seconds before next read for DHT22 
 		
 		//tempC += read_dht_temp( 'c' ) ;
 		//tempC = read_dht_temp( 'c' ) ;
@@ -115,6 +116,8 @@ void *ultraS( void *param ){
 		tests++;
 	}
 	
+	//tempC = 25;
+	//humid = 39.60;
 	if (DEBUG)
 		fprintf( stdout, "\nStarting..\n\n");
 	pid = getpid();
@@ -149,7 +152,8 @@ void *ultraS( void *param ){
 		delay(consecutive_interval);
 		}
 		
-	fprintf( stdout, "%.1f\n",  max_repeat(dist_cm) );
+	//fprintf( stdout, "%.1f\n",  max_repeat(dist_cm) );
+	fprintf( stdout, "%d\n",  (int)max_repeat(dist_cm) );					
 	//printf("Starting...2\n");
 	
 	/********************* Calling C-application for driver-2 ******************************/
@@ -166,8 +170,8 @@ void *ultraS( void *param ){
 		delay(consecutive_interval);
 		}
 		
-	fprintf( stdout, "%.1f\n",  max_repeat(dist_cm) );		
-				
+	//fprintf( stdout, "%.1f\n",  max_repeat(dist_cm) );		
+	fprintf( stdout, "%d\n",  (int)max_repeat(dist_cm) );					
 	//printf("END...\n");	
 	return dist_cm;
 
