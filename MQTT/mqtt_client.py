@@ -22,14 +22,34 @@ def onConnect ( client, userdata, flags, rc ):
     else:
         print( "[ERROR] Connection Error -", rc, " : Currently Unused" )
 
+import mysql_data
 import json
+from math import sqrt
+x1 = y1 =0
 def onMessage ( client, userdata, message ):
+    global x1
+    global y1
     topic = str(message.topic)
     message_data = str( message.payload.decode("utf-8") )
     print( topic + ' :' )#+ message_data )
     data_dict = json.loads( message_data )
     for key, value in data_dict.items():
         print( f" {key} : {value}" )
+
+    x2 = int(float(data_dict['X']))
+    y2 = int(float(data_dict['Y']))
+    z = sqrt( ((x2-x1)**2) + ((y2-y1)**2 ) )
+    x1 = x2
+    y1 = y2
+    
+    mysql_data.insertData( time_stamp= data_dict['Time'],\
+                           xcord= data_dict['X'],\
+                           ycord= data_dict['Y'],\
+                           temp= data_dict['Temp'],\
+                           humidity= data_dict['Humidity'],\
+                           distance= z)
+    print("Updated in DB")
+
     
 if __name__ == '__main__':
 

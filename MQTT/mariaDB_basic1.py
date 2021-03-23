@@ -2,16 +2,16 @@ import pymysql
 
 # Create a connection object 
 # IP address of the MySQL database server 
-Host = "0.0.0.0" # "localhost"
+Host = "96.125.163.12" # "localhost"
 
 # User name of the database server 
-User = "AFuser"	
+User = "acufol6j_iot_db"	
 
 # Password for the database user 
-Password = "secret"		 
+Password = "iottest"		 
 
-database = "mqtt_sql"
-tableName = "roughdata"
+database = "acufol6j_iot_db"
+tableName = "iot"
 
 conn = pymysql.connect(host=Host, user=User, password=Password, db= database) 
 
@@ -19,7 +19,8 @@ conn = pymysql.connect(host=Host, user=User, password=Password, db= database)
 cur = conn.cursor() 
 
 
-query = f"SELECT * FROM "+tableName
+#query = f"SELECT * FROM "+tableName
+query = f'INSERT INTO {tableName} (time_stamp, xcord, ycord, temprature, humidity) VALUES("2021-03-17 13:02:10", 24, 12, 11.12, 123.45 )'
 
 cur.execute(query) 
 
