@@ -19,8 +19,8 @@ def insertData( time_stamp, xcord, ycord, temp, humidity, distance ):
         db_cursor = connection.cursor() 
 
         query = f"INSERT INTO {tableName} (time_stamp, xcord, ycord, temperature, humidity, distance) VALUES( '{time_stamp}', {xcord}, {ycord}, {temp}, {humidity}, {distance} )"
-        #query = f"INSERT INTO iot( xcord, ycord, temperature, humidity, distance) VALUES(15, 15, 25.0, 40.10)"
-        #print( query )
+        #query = f"INSERT INTO iot( time_stamp, xcord, ycord, temperature, humidity, distance) VALUES('{time_stamp}',15, 15, '25.0', 40.10, 1.5)"
+        print( query )
         db_cursor.execute(query)
         connection.commit()
         
@@ -70,7 +70,7 @@ def renameCol( oldName, newName, dtype ):
 
 if __name__ == '__main__':
         print( 'Starting...' )
-        #insertData("2021-03-17 17:20:41", 15, 15, 25, 40.10)
+        insertData("2021-03-17 17:20:41", 15, 15, 25, 40.10)
         '''
         updateData( colName= 'timestamp', newVal= '2021-03-16 18:10:24', idNo= 1 )
         renameCol( 'timestamp' , 'time_stamp', 'timestamp' )
@@ -78,6 +78,6 @@ if __name__ == '__main__':
         renameCol( 'yc' , 'ycord', 'INT(11)' )
         renameCol( 'temp' , 'temperature', 'FLOAT(20)' )
         '''
-        viewFullData()
+        #viewFullData()
         #showTable()
         print( 'COMPLETED' )

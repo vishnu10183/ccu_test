@@ -1,0 +1,18 @@
+<html>
+<title> RC Control </title>
+<body>
+
+<h1> ROVER STATUS : {{rover_status}} </h1><br>
+
+<button type="button" onclick="window.location.href='{{ url_for( 'forwardPage') }}';">FORWARD</button>
+<br> <br> <br>
+<button type="button" onclick="window.location.href='{{ url_for( 'revPage') }}';">REVERSE</button>
+<br> <br> <br>
+<button type="button" onclick="window.location.href='{{ url_for( 'leftPage') }}';">LEFT</button>
+<br> <br> <br>
+<button type="button" onclick="window.location.href='{{ url_for( 'rightPage') }}';">RIGHT</button>
+<br> <br> <br>
+<button type="button" onclick="window.location.href='{{ url_for( 'brakePage') }}';">BRAKE</button>
+<br> <br> <br>
+</body>
+</html>
