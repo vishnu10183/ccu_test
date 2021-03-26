@@ -37,7 +37,7 @@ def mqttPublish( xc, yc, temp, humd ):
         "Time" : date_str,
         "X" : xc,
         "Y" : yc,
-        "Temp" : temp+'.0',
+        "Temp" : temp,
         "Humidity": humd
         }
     json_str = json.dumps( json_msg ) # Convert dictionary to JSON string
