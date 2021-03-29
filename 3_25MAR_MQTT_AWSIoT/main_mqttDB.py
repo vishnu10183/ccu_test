@@ -22,7 +22,7 @@ import paho_mqtt # paho_mqtt.py
 # ---------------------------------------------------- MAIN BODY ---
 # ------------------------------------------------------------------
 
-consecutive_interval = 10 # in seconds
+consecutive_interval = 1 # in seconds
 
 if __name__ == '__main__':
    print("Begin...")
@@ -36,7 +36,7 @@ if __name__ == '__main__':
             print("...DONE")
             
             print("Running HCSR04 C-file...", end= " ")
-            tmp=subprocess.check_output( ["sudo", "./"+us_c_build_file]) # build file name
+            tmp=subprocess.check_output( [ "./"+us_c_build_file], timeout= 1 ) # build file with 2 seconds timeout
             print("...DONE")
 	    
             print(str(tmp))
@@ -53,11 +53,15 @@ if __name__ == '__main__':
             paho_mqtt.mqttPublish( int(float(val[3])), \
                                int(float(val[5])), \
                                val[0],\
-                               val[1] )
+                               val[1], 1, 1 )
             print("...Done")
 
+        #except TimeoutExpired:
+          #print ( "\n\nTimeout!!!\n" )
+
+
         except:
-           print ("ERROR!")
+           print ("\n\nERROR!\n")
            pass
     
    print("Program Completed.")

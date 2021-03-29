@@ -144,7 +144,9 @@ void *ultraS( void *param ){
 	//wiringPiSetup();
 	//printf("Starting...1\n");
 	if(DEBUG) fprintf( stdout, "Starting front HCSR04\n" );
-	
+
+	tempC = (tempC - 32.0)* 5 / 9.0; // 'F to 'C for HC-SR04
+
 	/********************* Calling C-application for driver-1 ******************************/
 	count=0;
 	while(count < obs_no_ultraS) {

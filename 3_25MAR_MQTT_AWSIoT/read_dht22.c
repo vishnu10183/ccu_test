@@ -71,10 +71,10 @@ void *ultraS( void *param ){
 		//tempC += read_dht_temp( 'c' ) ;
 		//tempC = read_dht_temp( 'c' ) ;
 		//fprintf( stdout, "ReadingTemp\n" )
-		read_dht_temp( &tempC, 'c' , &humid ) ;
-		fprintf( stdout, "%.2f 'C\n", tempC );
+		read_dht_temp( &tempC, 'f' , &humid ) ;
+		fprintf( stdout, "%.2f 'F\n", tempC );
 		fprintf( stdout, "%.2f\n", humid );
-		fprintf( fp, "%0.2f ", tempC );
+		fprintf( fp, "%0.2f ", tempC ); // Convert 'F to 'C
 		fprintf( fp, "%0.2f ", humid );
 		fclose(fp);
 		tests++;

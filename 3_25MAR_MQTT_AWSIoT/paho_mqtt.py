@@ -23,7 +23,7 @@ def onConnect( client, userdata, flags, rc ):
 import json
 from datetime import datetime
 
-def mqttPublish( xc, yc, temp, humd ):
+def mqttPublish( xc, yc, temp, humd, field_id, imp_id ):
     ourClient = mqtt.Client( "Pi4-MQTT" ) # Create MQTT Client Object
     
     ourClient.on_connect = onConnect # Connection call-back function
@@ -38,7 +38,9 @@ def mqttPublish( xc, yc, temp, humd ):
         "X" : xc,
         "Y" : yc,
         "Temp" : temp,
-        "Humidity": humd
+        "Humidity": humd,
+        "Field_ID" : field_id,
+        "Impl_ID" : imp_id
         }
     json_str = json.dumps( json_msg ) # Convert dictionary to JSON string
     
@@ -49,5 +51,5 @@ def mqttPublish( xc, yc, temp, humd ):
 
 
 if __name__ == '__main__':
-    mqttPublish( 24, 12, 25, 10 )
+    mqttPublish( 24, 12, 25.11, 10.24, 1, 1 )
     
