@@ -6,9 +6,17 @@ Topic = "test-Pi"
 mqtt_user = "rpi3"
 mqtt_pass = "girish"
 
+def mqttLoop():
+        # Subscribing to "test-Pi" Topic
+        ourClient.subscribe( Topic )
+        ourClient.on_message = onMessage # Subscription call-back function
+
+        ourClient.loop_start( )
+
 def onConnect ( client, userdata, flags, rc ):
     if rc == 0:
         print( "Connection Successful!" )
+        mqttLoop()
     elif rc == 1:
         print( "[ERROR] Connection Error -", rc, " : Incorrect Protocol Version" )
     elif rc == 2:
@@ -47,7 +55,9 @@ def onMessage ( client, userdata, message ):
                            ycord= data_dict['Y'],\
                            temp= data_dict['Temp'],\
                            humidity= data_dict['Humidity'],\
-                           distance= z)
+                           distance= z, \
+                           field_id = data_dict['Field_ID'], \
+                           impl_id = data_dict['Impl_ID'])
     print("Updated in DB")
 
     
@@ -57,13 +67,11 @@ if __name__ == '__main__':
         
         ourClient = mqtt.Client( "Pi2-MQTT" ) # Create MQTT Client Object
         ourClient.on_connect = onConnect # Connection call-back function
+
         ourClient.username_pw_set(username= mqtt_user,password= mqtt_pass)
         ourClient.connect( broker_IPaddr ) # Broker IP address
-        # Subscribing to "test-Pi" Topic
-        ourClient.subscribe( Topic )
-        ourClient.on_message = onMessage # Subscription call-back function
 
-        ourClient.loop_start( )
+        mqttLoop()
         time.sleep(.5)
         print("MQTT Subscriber listening...")
         #time.sleep(20) # Just delaying before program ends

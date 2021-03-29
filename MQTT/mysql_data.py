@@ -14,11 +14,11 @@ tableName = "iot" #"roughdata" #"iot"
 
 
 
-def insertData( time_stamp, xcord, ycord, temp, humidity, distance ):
+def insertData( time_stamp, xcord, ycord, temp, humidity, distance, field_id, impl_id ):
         connection = pymysql.connect(host=Host, user=User, password=Password, db= database) 
         db_cursor = connection.cursor() 
 
-        query = f"INSERT INTO {tableName} (time_stamp, xcord, ycord, temperature, humidity, distance) VALUES( '{time_stamp}', {xcord}, {ycord}, {temp}, {humidity}, {distance} )"
+        query = f"INSERT INTO {tableName} (time_stamp, xcord, ycord, temperature, humidity, distance, field_id, implement_id) VALUES( '{time_stamp}', {xcord}, {ycord}, {temp}, {humidity}, {distance}, {field_id}, {impl_id} )"
         #query = f"INSERT INTO iot( time_stamp, xcord, ycord, temperature, humidity, distance) VALUES('{time_stamp}',15, 15, '25.0', 40.10, 1.5)"
         print( query )
         db_cursor.execute(query)
