@@ -7,10 +7,10 @@
 #define consecutive_interval	25	// milliseconds
 
 #define TRIG1  15 // BCM-14 //7 // BCM- 4
-#define ECHO1  0 // BCM-17
+#define ECHO1  16// BCM-15 //0 // BCM-17
 
-#define TRIG2  12 //BCM-10
-#define ECHO2  3 //BCM-22
+#define TRIG2  4 //12 //BCM-10
+#define ECHO2  5 //3 //BCM-22
 
 int hcsr04_pins[2][2] = {  { TRIG1, ECHO1 },
                              { TRIG2, ECHO2 }

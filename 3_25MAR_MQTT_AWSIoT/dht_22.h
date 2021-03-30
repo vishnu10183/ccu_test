@@ -1,5 +1,5 @@
 
-#define DHT_PIN		2 // BCM-27
+#define DHT_PIN		12 //2 // BCM-27
 
 #define MAX_TIMINGS		85
 
