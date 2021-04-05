@@ -6,16 +6,23 @@ Host = "aws-iot-project.cm3t4elsveqy.us-east-2.rds.amazonaws.com" #"96.125.163.1
 
 # Access-Details of the database server 
 User = "iot_admin" #"acufol6j_iot_db" #"corona" #"AFuser" #
-Password = "Iot1234#"#"iottest" #"mask" #"secret" #
+Password = "Iot1234#"# "iottest" #"mask" #"secret" #
 
 database = "iot_db"#"acufol6j_iot_db" #"iot_db" #"mqtt_sql" #"iot_db" #
 tableName = "iot" #"roughdata" #"iot"
 
+connection = pymysql.connect(host=Host, user=User, password=Password, db= database)
 
+def startSQL():
+        global connection
+        connection = pymysql.connect(host=Host, user=User, password=Password, db= database) 
 
+def closeSQL():
+        global connection
+        connection.close()
 
 def insertData( time_stamp, xcord, ycord, temp, humidity, distance, field_id, impl_id ):
-        connection = pymysql.connect(host=Host, user=User, password=Password, db= database) 
+        global connection
         db_cursor = connection.cursor() 
 
         query = f"INSERT INTO {tableName} (time_stamp, xcord, ycord, temperature, humidity, distance, field_id, implement_id) VALUES( '{time_stamp}', {xcord}, {ycord}, {temp}, {humidity}, {distance}, {field_id}, {impl_id} )"
@@ -24,7 +31,7 @@ def insertData( time_stamp, xcord, ycord, temp, humidity, distance, field_id, im
         db_cursor.execute(query)
         connection.commit()
         
-        connection.close()
+        
 
 def updateData( colName, newVal, idNo ):
         connection = pymysql.connect(host=Host, user=User, password=Password, db= database) 

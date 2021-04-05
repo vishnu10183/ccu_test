@@ -6,6 +6,8 @@ Topic = "test-Pi"
 mqtt_user = "rpi3"
 mqtt_pass = "girish"
 
+dist_threshold = 10.0 # filter value of consecutive readings
+
 def mqttLoop():
         # Subscribing to "test-Pi" Topic
         ourClient.subscribe( Topic )
@@ -15,7 +17,7 @@ def mqttLoop():
 
 def onConnect ( client, userdata, flags, rc ):
     if rc == 0:
-        print( "Connection Successful!" )
+        print( "----------->>>>> Connection Successful!" )
         mqttLoop()
     elif rc == 1:
         print( "[ERROR] Connection Error -", rc, " : Incorrect Protocol Version" )
@@ -33,10 +35,12 @@ def onConnect ( client, userdata, flags, rc ):
 import mysql_data
 import json
 from math import sqrt
-x1 = y1 =0
+x1 = y1 = 0.0
+firstRead = 1
+
 def onMessage ( client, userdata, message ):
-    global x1
-    global y1
+    global x1, y1
+    global firstRead, dist_threshold
     topic = str(message.topic)
     message_data = str( message.payload.decode("utf-8") )
     print( topic + ' :' )#+ message_data )
@@ -46,11 +50,20 @@ def onMessage ( client, userdata, message ):
 
     x2 = int(float(data_dict['X']))
     y2 = int(float(data_dict['Y']))
-    z = sqrt( ((x2-x1)**2) + ((y2-y1)**2 ) )
-    x1 = x2
-    y1 = y2
-    
-    mysql_data.insertData( time_stamp= data_dict['Time'],\
+
+    if firstRead:
+           firstRead = 0
+           x1 = x2
+           y1 = y2
+
+    badValue = 0
+    if abs( x2-x1 ) > dist_threshold or abs( y2-y1 ) > dist_threshold :
+            badValue = 1
+
+    if not badValue:
+            z = sqrt( ((x2-x1)**2) + ((y2-y1)**2 ) )
+            #'''
+            mysql_data.insertData( time_stamp= data_dict['Time'],\
                            xcord= data_dict['X'],\
                            ycord= data_dict['Y'],\
                            temp= data_dict['Temp'],\
@@ -58,8 +71,12 @@ def onMessage ( client, userdata, message ):
                            distance= z, \
                            field_id = data_dict['Field_ID'], \
                            impl_id = data_dict['Impl_ID'])
-    print("Updated in DB")
-
+            #'''
+            print("::::::::::::: Updated in DB :::::::::::::")
+            x1 = x2
+            y1 = y2
+    else:
+           print("::::::::::::: << BAD VALUE >> :::::::::::::")
     
 if __name__ == '__main__':
 
@@ -71,10 +88,23 @@ if __name__ == '__main__':
         ourClient.username_pw_set(username= mqtt_user,password= mqtt_pass)
         ourClient.connect( broker_IPaddr ) # Broker IP address
 
+        mysql_data.startSQL()
         mqttLoop()
-        time.sleep(.5)
+        #time.sleep(.5)
         print("MQTT Subscriber listening...")
         #time.sleep(20) # Just delaying before program ends
 
-    except KeyboardInterrupt:
-        ourClient.loop_stop( ) # If not stopped, keeps on listening
+        '''
+        exitChar = input()
+        if exitChar == 'stop':
+                print("\n\n .....::: STOPPED :::.....")
+                mysql_data.closeSQL()
+                ourClient.loop_stop( )
+                exit()
+        '''
+    except Exception as e:
+            print( f"================ [ERROR] {e} ==============" )
+            mqttLoop()
+            
+    #except KeyboardInterrupt:
+        #ourClient.loop_stop( ) # If not stopped, keeps on listening
