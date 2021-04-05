@@ -15,21 +15,34 @@ us_c_build_file = "us2_dht22"
 temp_c_build_file = "read_dht22"
 
 import subprocess
-from time import sleep
+from time import sleep, perf_counter
 import paho_mqtt # paho_mqtt.py
+import selectfunc
 
 # ------------------------------------------------------------------
 # ---------------------------------------------------- MAIN BODY ---
 # ------------------------------------------------------------------
 
 consecutive_interval = 1 # in seconds
+interval_init = perf_counter()
 
 if __name__ == '__main__':
    print("Begin...")
    while True:
-        print( "Waiting...", end= " " )
-        sleep(consecutive_interval)
-        print( "DONE" )
+     sleep(0.01)
+     #st = selectfunc.startstop()
+     st , Fsw_select = selectfunc.fieldselect()
+     if not st:
+      #Fsw_select = selectfunc.fieldselect()
+      Isw_select = selectfunc.implselect()
+     #print( f"  Field Select : {Fsw_select} ,  Implement Select : {Isw_select}" )
+     
+     #print( "Waiting...", end= " " )
+     #sleep(consecutive_interval)
+     #print( "DONE" )
+     if st: 
+      if ( perf_counter() - interval_init ) > consecutive_interval :
+        interval_init = perf_counter()
         try:
             print("Running DHT22 C-file...", end= " ")
             tmp=subprocess.check_output( ["sudo", "./"+temp_c_build_file]) # build file name
@@ -53,7 +66,7 @@ if __name__ == '__main__':
             paho_mqtt.mqttPublish( int(float(val[3])), \
                                int(float(val[5])), \
                                val[0],\
-                               val[1], 1, 1 )
+                               val[1], Fsw_select, Isw_select )
             print("...Done")
 
         #except TimeoutExpired:
