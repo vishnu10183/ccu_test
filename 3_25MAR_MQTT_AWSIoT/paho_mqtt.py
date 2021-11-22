@@ -23,7 +23,7 @@ def onConnect( client, userdata, flags, rc ):
 import json
 from datetime import datetime
 
-def mqttPublish( xc, yc, temp, humd, field_id, imp_id ):
+def mqttPublish( xc, yc, temp, humd, field_id, imp_id, resetVar ):
     ourClient = mqtt.Client( "Pi4-MQTT" ) # Create MQTT Client Object
     
     ourClient.on_connect = onConnect # Connection call-back function
@@ -40,7 +40,8 @@ def mqttPublish( xc, yc, temp, humd, field_id, imp_id ):
         "Temp" : temp,
         "Humidity": humd,
         "Field_ID" : field_id,
-        "Impl_ID" : imp_id
+        "Impl_ID" : imp_id,
+        "resetVar" : resetVar
         }
     json_str = json.dumps( json_msg ) # Convert dictionary to JSON string
     

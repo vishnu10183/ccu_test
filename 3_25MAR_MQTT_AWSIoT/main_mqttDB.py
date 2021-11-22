@@ -25,6 +25,7 @@ import selectfunc
 
 consecutive_interval = 1 # in seconds
 interval_init = perf_counter()
+resetFlag = 1
 
 if __name__ == '__main__':
    print("Begin...")
@@ -33,6 +34,7 @@ if __name__ == '__main__':
      #st = selectfunc.startstop()
      st , Fsw_select = selectfunc.fieldselect()
      if not st:
+      resetFlag = 1
       #Fsw_select = selectfunc.fieldselect()
       Isw_select = selectfunc.implselect()
      #print( f"  Field Select : {Fsw_select} ,  Implement Select : {Isw_select}" )
@@ -66,15 +68,16 @@ if __name__ == '__main__':
             paho_mqtt.mqttPublish( int(float(val[3])), \
                                int(float(val[5])), \
                                val[0],\
-                               val[1], Fsw_select, Isw_select )
+                               val[1], Fsw_select, Isw_select, resetFlag )
+            resetFlag = 0
             print("...Done")
 
         #except TimeoutExpired:
           #print ( "\n\nTimeout!!!\n" )
 
 
-        except:
-           print ("\n\nERROR!\n")
+        except Exception as e:
+           print ( f"\n\nERROR! : {e}\n")
            pass
     
    print("Program Completed.")

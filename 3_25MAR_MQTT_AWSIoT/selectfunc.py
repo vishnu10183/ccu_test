@@ -106,7 +106,7 @@ def fieldselect():
 			if Fsw_flag == 0:
 				io.output( f1 , 0 )
 				io.output( f2 , 0 )
-			if Fsw_flag == 1:
+			if Fsw_flag == 1 : # or Fsw_flag ==2:
 				io.output( f1 , 1 )
 				io.output( f2 , 0 )
 			if Fsw_flag == 2:
